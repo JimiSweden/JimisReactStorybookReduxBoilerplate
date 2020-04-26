@@ -15,7 +15,7 @@ function DummyFeatureMainPagePure({ items, isLoading }) {
         <>
             <div style={{ backgroundColor: "green" }}>
 
-                <div >your feature.. Do something with the 'items' </div>
+                <div >this is your 'feature'.. now go and Do something with the 'items' in your 'future' 😉</div>
 
                 {items.map(item => {
                     return (
@@ -23,7 +23,6 @@ function DummyFeatureMainPagePure({ items, isLoading }) {
                             name: {item.name}, type: {item.type}
                         </div>
                     )
-
                 })}
             </div>
         </>
@@ -36,8 +35,6 @@ DummyFeatureMainPagePure.propTypes = {
         name: PropTypes.string.isRequired,
         type: PropTypes.string.isRequired
     }))
-
-
 }
 
 
@@ -50,7 +47,7 @@ function DummyFeatureMainPage() {
     const dispatch = useDispatch();
     /** IMPORTANT -  
      * state.featureDummyObjects , refers to 'reduxStore.featureDummyObjects' 
-     * and 'featureDummyObjects' is the reducer named in src/storeRedux/rootReducer.js 
+     * and 'featureDummyObjects' is the reducer in src/storeRedux/rootReducer.js  (exported from dummyFeatureDummyObjectsSlice.js)
      * (haven't looked at how intelisense can be fixed to support this)
      * */
     const featureDummyObjects = useSelector((state) => state.featureDummyObjects.featureDummyObjectsAll)
@@ -70,10 +67,6 @@ function DummyFeatureMainPage() {
     }, [featureDummyObjects])
 
     return (
-
-
-
-
         <DummyFeatureMainPagePure items={featureDummyObjects} isLoading={isLoadingDummyObjects} />
     )
 }
