@@ -50,8 +50,8 @@ function BookCard({ bookItem }) {
             <CardContent>
                 <Typography className={classes.preTitle} color="textSecondary" gutterBottom>
                     A book I have
-{bookItem.type == "audiobook" && " listened to"}
-                    {bookItem.type == "book" && " read"}.
+{bookItem.type === "audiobook" && " listened to"}
+                    {bookItem.type === "book" && " read"}.
 
 </Typography>
                 <Typography variant="h5" component="h2">

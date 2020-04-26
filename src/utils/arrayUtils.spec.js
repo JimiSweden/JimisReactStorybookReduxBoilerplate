@@ -1,4 +1,8 @@
-import { arrayToObjectWithIdsAsProp } from './arrayUtils'
+import {
+    arrayToObjectWithIdsAsProp,
+    groupByProperty,
+    groupByNestedProperty
+} from './arrayUtils'
 
 
 
@@ -36,7 +40,7 @@ describe('array utils', () => {
         };
     }
 
-    test('arrayToObjectWithIdsAsProp returns object as expected', () => {
+    test('arrayToObjectWithIdsAsProp returns object with array items Ids as props', () => {
 
         const { origin, groupById, expected } = testData_arrayToObjectWithIdsAsProp();
         const actualResult = arrayToObjectWithIdsAsProp(origin, groupById)
@@ -44,36 +48,89 @@ describe('array utils', () => {
         expect(actualResult).toEqual(expected);
     });
 
+    test('groupByProperty groups by owner and handles owner value with spaces', () => {
+        //arrange
+        const myArray = [
+            { id: 1, name: "an item", owner: "jimi" },
+            { id: 2, name: "another item", owner: "jimi" },
+            { id: 3, name: "unknown item", owner: "someone else" }
+        ];
 
+        const expected = {
+            jimi: [
+                { id: 1, name: "an item", owner: "jimi" },
+                { id: 2, name: "another item", owner: "jimi" }
+            ],
+            "someone else": [
+                { id: 3, name: "unknown item", owner: "someone else" }
+            ]
+        };
 
+        //act
+        const actual = groupByProperty(myArray, 'owner');
+        debugger;
+
+        //assert
+        expect(actual).toEqual(expected);
+
+    })
+
+    test('groupByNestedProperty groups authors by books type, i.e paperback and audio', () => {
+
+        //arrange
+        const myAuthorsWithBook = [
+            { name: 'Ray Dalio', book: { name: 'Principles', type: 'audiobook' } },
+            { name: 'Nate Silver', book: { name: 'the signal and the noise', type: 'audiobook' } },
+            { name: 'Seth Godin', book: { name: 'LINCHPIN - Are you indispenseble', type: 'paperback' } },
+            { name: 'Seth Godin', book: { name: 'THIS IS MARKETING', type: 'paperback' } },
+        ];
+
+        const expected = {
+            audiobook: [
+                { name: 'Ray Dalio', book: { name: 'Principles', type: 'audiobook' } },
+                { name: 'Nate Silver', book: { name: 'the signal and the noise', type: 'audiobook' } },
+            ],
+            paperback: [
+                { name: 'Seth Godin', book: { name: 'LINCHPIN - Are you indispenseble', type: 'paperback' } },
+                { name: 'Seth Godin', book: { name: 'THIS IS MARKETING', type: 'paperback' } },
+            ]
+        }
+
+        //act
+        const actual = groupByNestedProperty(myAuthorsWithBook, 'book', 'type');
+
+        //assert
+        expect(actual).toEqual(expected);
+
+    })
 
     /**   working simple example of filtering with a reducer  
-     * not sure if it should be used in arrayUtils
+     * not sure if it should be used in arrayUtils, keeping for reference.
     */
-    function filterQueues(currentQueues, idsOfQueuesToKeep) {
+    function filterItems(currentItems, idsOfItemsToKeep) {
 
         const initialValue = []; //start with empty array
-        let _queuesVisible = currentQueues.reduce((accumulator, queue) => {
+        let _itemsVisible = currentItems.reduce((accumulator, item) => {
 
-            if (idsOfQueuesToKeep.find(filtered => filtered === queue)) {
-                // console.log('queue found and added', queue);
-                accumulator.push(queue)
+            if (idsOfItemsToKeep.find(filtered => filtered === item)) {
+                // console.log('item found and added', item);
+                accumulator.push(item)
             }
 
             // console.log('accumulator: ', accumulator)
             return accumulator;
         }, initialValue);
 
-        return _queuesVisible;
+        return _itemsVisible;
     }
 
-    test.skip('returns queues matching given Ids', () => {
+    test('filterItems returns items matching given Ids', () => {
 
-        const filteredQueueIds = [3, 6]
-        const queues = [1, 2, 3, 4, 5, 6];
+        const filteredItemIds = [3, 6]
+        const items = [1, 2, 3, 4, 5, 6];
 
-        const _queuesVisible = filterQueues(queues, filteredQueueIds)
-        expect(_queuesVisible).toEqual([3, 6]);
+        const _itemsVisible = filterItems(items, filteredItemIds)
+        expect(_itemsVisible).toEqual([3, 6]);
     });
 
 
