@@ -44,6 +44,7 @@ server.use((req, res, next) => {
   next();
 });
 
+//example post
 server.post("/myDummyObjects/", function (req, res, next) {
   const error = validateDummyObject(req.body);
   if (error) {
@@ -62,8 +63,7 @@ server.listen(port, () => {
   console.log(`JSON Server is running on port ${port}`);
 });
 
-// Centralized logic
-
+// Centralized logic example
 function validateDummyObject(dummyObject) {
   if (!dummyObject.name) return "name is required.";
   return "";
