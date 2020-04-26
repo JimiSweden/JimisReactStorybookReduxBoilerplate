@@ -1,3 +1,15 @@
+# react boiler plate with examples using storybook, redux, material-ui, json-server
+
+- storybook see (README_storybook_docs_etc for more info)
+    - with som e simple example components/features
+- redux 
+    - with createSlice to generate reducer and actions, 
+    - with useDispatch and useSelector to get the data in using component, 
+- mockData api using json-server, 
+- styling with material-ui
+
+
+# the standard React CRA readme below >> 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
