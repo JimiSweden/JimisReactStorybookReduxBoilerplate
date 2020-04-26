@@ -16,7 +16,7 @@ function DummyFeatureDemoPage() {
             <h5>
                 DummyFeatureMainPage depends on data from a redux store
             </h5>
-            <h5>here we decide what redux store</h5>
+            <h5>here we decide what redux store to 'Provide' our feature with</h5>
 
             <Provider store={store}>
                 <DummyFeatureMainPage />
